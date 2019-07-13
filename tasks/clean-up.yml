@@ -1,0 +1,7 @@
+---
+- name: Remove unneeded apt stuff
+  apt:
+    autoremove: yes
+    # Need the force_apt_get until
+    # https://github.com/ansible/ansible/issues/56832
+    force_apt_get: yes

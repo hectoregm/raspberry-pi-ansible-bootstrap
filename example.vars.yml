@@ -1,0 +1,40 @@
+---
+
+#
+# Networking configuration
+#
+
+# Mapping of what hardware MAC addresses should be configured with specific IPs.
+mac_address_mapping:
+  "dc:a6:32:00:81:c6":
+    name: pi4-gluster01.lan
+    ip: "192.168.1.171"
+  "dc:a6:32:05:1a:09":
+    name: pi4-gluster02.lan
+    ip: "192.168.1.172"
+  "dc:a6:32:05:32:72":
+    name: pi4-gluster03.lan
+    ip: "192.168.1.173"
+  "dc:a6:32:04:b0:fd":
+    name: pi4-kubernetes01.lan
+    ip: "192.168.1.181"
+  "dc:a6:32:03:d2:ff":
+    name: pi4-kubernetes02.lan
+    ip: "192.168.1.182"
+  "dc:a6:32:03:cf:77":
+    name: pi4-kubernetes03.lan
+    ip: "192.168.1.183"
+
+# Nameservers
+dns_nameservers:
+  - "1.1.1.1"
+  - "1.0.0.1"
+
+# Router / Default Gateway
+default_gateway: 192.168.1.1
+
+#
+# System configuration
+#
+
+timezone: America/New_York

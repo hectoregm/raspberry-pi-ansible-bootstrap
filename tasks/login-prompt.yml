@@ -1,0 +1,72 @@
+---
+
+- name: Install Neofetch
+  apt:
+    name:
+      - neofetch
+    update_cache: yes
+    # Need the force_apt_get until
+    # https://github.com/ansible/ansible/issues/56832
+    force_apt_get: yes
+
+- name: Enable neofetch on login
+  copy:
+    content: "neofetch"
+    dest: "/home/{{ ansible_ssh_user }}/.bash_profile"
+    group: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_ssh_user }}"
+    mode: 0775
+
+- name: Quite the login prompt
+  file:
+    dest: "/home/{{ ansible_ssh_user }}/.hushlogin"
+    state: touch
+    group: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_ssh_user }}"
+    mode: 0775
+
+- name: Remove motd
+  command: update-rc.d motd remove
+
+- name: Create neofetch config directory
+  file:
+    path: "/home/{{ ansible_ssh_user }}/.config/neofetch"
+    state: directory
+    recurse: yes
+    mode: 0775
+
+- name: Add custom neofetch config
+  template:
+    src: "templates/neofetch.conf.j2"
+    dest: "/home/{{ ansible_ssh_user }}/.config/neofetch/config.conf"
+    mode: 0775
+
+#    prin "CPU Temp" "$(vcgencmd measure_temp|awk -F "=" '{print $2}')"
+#    prin "CPU Voltage" "$(vcgencmd measure_volts core|awk -F "=" '{print $2}')"
+# - name: Add CPU Temp to neofetch
+#   blockinfile:
+#     dest: "/home/{{ ansible_ssh_user }}/.config/neofetch/config.conf"
+#     block: |
+#       prin "CPU Temp" "$(vcgencmd measure_temp|awk -F "=" '{print $2}')"
+#       prin "CPU Voltage" "$(vcgencmd measure_volts core|awk -F "=" '{print $2}')"
+#     insertafter: "info \"CPU\" cpu"
+
+# - name: Remove message about changing password
+#   file:                  
+#    path: "/etc/profile.d/sshpwd.sh"    
+#    state: absent
+
+# # session    optional   pam_motd.so motd=/run/motd.dynamic
+# # session    optional   pam_motd.so noupdate
+# - name: Remove last login and system version message
+#   replace:
+#     path: /etc/pam.d/login
+#     regexp: '(.*motd=\/run\/motd\.dynamic.*)'
+#     replace: '#\1'
+
+# - name: Remove motd.dynamic
+#   file:                  
+#    path: "/run/motd.dynamic"    
+#    state: absent
+
+# # session    optional   pam_lastlog.so

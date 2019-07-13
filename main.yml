@@ -1,0 +1,46 @@
+---
+- hosts: bootstrap
+  become: yes
+
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    # Work-around for Buster
+    - name: Allow Release Info Change
+      command: apt-get update --allow-releaseinfo-change
+
+    - name: Upgrade all packages to the latest version
+      apt:
+        name: "*"
+        state: latest
+        # Need the force_apt_get until
+        # https://github.com/ansible/ansible/issues/56832
+        force_apt_get: yes
+
+    - name: Install Common Packages
+      apt:
+        name:
+          - sudo
+          - openssh-server
+          - git
+          - build-essential
+          - gnupg2
+          - python-dev
+          - python-pip
+          - apt-transport-https
+          - ca-certificates
+          - software-properties-common
+        update_cache: yes
+        # Need the force_apt_get until
+        # https://github.com/ansible/ansible/issues/56832
+        force_apt_get: yes
+
+  tasks:
+    - include_tasks: tasks/boot-options.yml
+    - include_tasks: tasks/timezone.yml
+    - include_tasks: tasks/disable-swap.yml
+    - include_tasks: tasks/login-prompt.yml
+    - include_tasks: tasks/networking.yml
+    - include_tasks: tasks/clean-up.yml
+    - include_tasks: tasks/reboot.yml
