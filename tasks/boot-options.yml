@@ -41,3 +41,8 @@
       dtoverlay=pi3-disable-bt
   when: bluetooth.stdout != ""
 
+- name: Disable Audio
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^dtparams=audio=on$'
+    line: 'dtparams=audio=off'
