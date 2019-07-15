@@ -9,7 +9,7 @@
 
 - name: Check if Pi-Hat fan speed already adjusted
   shell: grep "^poe_fan_temp0" /boot/config.txt
-  register: fan_speed_enabled
+  register: fan_speed
 
 - name: Set Pi-Hat fan speed to turn on when CPU temp is 80C, turn off at 75C
   blockinfile:
@@ -17,6 +17,27 @@
     block: |
       dtparam=poe_fan_temp0=80000,poe_fan_temp0_hyst=5000
       dtparam=poe_fan_temp1=82000,poe_fan_temp1_hyst=2000
-  when: fan_speed_enabled.stdout != ""
+  when: fan_speed.stdout != ""
   
+- name: Check if Wifi is enabled
+  shell: grep "^pi3-disable-wifi" /boot/config.txt
+  register: wifi
+
+- name: Disable WiFi
+  blockinfile:
+    path: /boot/config.txt
+    block: |
+      dtoverlay=pi3-disable-wifi
+  when: wifi.stdout != ""
   
+- name: Check if Bluetooth is enabled
+  shell: grep "^pi3-disable-bt" /boot/config.txt
+  register: bluetooth
+
+- name: Disable Bluetooth
+  blockinfile:
+    path: /boot/config.txt
+    block: |
+      dtoverlay=pi3-disable-bt
+  when: bluetooth.stdout != ""
+
