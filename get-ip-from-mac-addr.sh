@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Install arp-can
-#   Linux: sudo apt-get install arp-scan
-#   MacOS: brew install arp-scan
-
 mac_addresses=(dc:a6:32:00:81:c6 dc:a6:32:05:1a:09 dc:a6:32:05:32:72 dc:a6:32:04:b0:fd dc:a6:32:03:d2:ff dc:a6:32:03:cf:77)
 
 for mac_address in "${mac_addresses[@]}"  

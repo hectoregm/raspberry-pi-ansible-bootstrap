@@ -8,7 +8,7 @@
     state: present
 
 - name: Check if Pi-Hat fan speed already adjusted
-  shell: grep "^poe_fan_temp0" /boot/config.txt
+  shell: grep "^dtparam=poe_fan_temp0" /boot/config.txt
   register: fan_speed
 
 - name: Set Pi-Hat fan speed to turn on when CPU temp is 80C, turn off at 75C
@@ -20,7 +20,7 @@
   when: fan_speed.stdout != ""
   
 - name: Check if Wifi is enabled
-  shell: grep "^pi3-disable-wifi" /boot/config.txt
+  shell: grep "^dtoverlay=pi3-disable-wifi" /boot/config.txt
   register: wifi
 
 - name: Disable WiFi
@@ -31,7 +31,7 @@
   when: wifi.stdout != ""
   
 - name: Check if Bluetooth is enabled
-  shell: grep "^pi3-disable-bt" /boot/config.txt
+  shell: grep "^dtoverlay=pi3-disable-bt" /boot/config.txt
   register: bluetooth
 
 - name: Disable Bluetooth
@@ -40,6 +40,17 @@
     block: |
       dtoverlay=pi3-disable-bt
   when: bluetooth.stdout != ""
+
+- name: Check if HDMI is enabled
+  shell: grep "^hdmi_blanking" /boot/config.txt
+  register: hdmi
+
+- name: Disable HDMI
+  blockinfile:
+    path: /boot/config.txt
+    block: |
+      hdmi_blanking=2
+  when: hdmi.stdout != ""
 
 - name: Disable Audio
   lineinfile:

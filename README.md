@@ -1,8 +1,13 @@
-# Raspberry Pi Networking Setup
+# Headless Raspberry Pi Setup with Ansible
 
-When you plug a fresh new Raspberry Pi into your network, the default configuration tells the Pi to use DHCP to dynamically request an IP address from your network's router. Typically this is a pretty random address, and it can make configuration annoying.
+## Current automations
 
-# TBD
+* Boot: enable cgroups, disable WiFi, disable Bluetooth, disable IPv6, disable HDMI, disable audio
+* Network: Set static IP, set DNS servers, set hostname, set hosts DNS names, use legacy IP tables
+* System: set timezone, install common packages, disable swap
+* User: install and activate neofetch
+
+## What do
 
 * Place the current IP of the Pis to provision in the `inventory` file
 * Use the helper script `get-ip-from-mac-addr.sh` to get the current IPs of your Pis
