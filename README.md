@@ -4,7 +4,7 @@
 
 * Boot: enable cgroups, disable WiFi, disable Bluetooth, disable IPv6, disable HDMI, disable audio
 * Network: Set static IP, set DNS servers, set hostname, set hosts DNS names, use legacy IP tables
-* System: set timezone, install common packages, disable swap
+* System: upgrade system, upgrade packages, install common packages, set timezone, disable swap
 * User: install and activate neofetch
 
 ## What do
