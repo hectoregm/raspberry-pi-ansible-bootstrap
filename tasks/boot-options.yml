@@ -15,8 +15,8 @@
   blockinfile:
     path: /boot/config.txt
     block: |
-      dtparam=poe_fan_temp0=80000,poe_fan_temp0_hyst=5000
-      dtparam=poe_fan_temp1=82000,poe_fan_temp1_hyst=2000
+      dtparam=poe_fan_temp0=60000,poe_fan_temp0_hyst=5000
+      dtparam=poe_fan_temp1=65000,poe_fan_temp1_hyst=2000
   when: fan_speed.stdout != ""
   
 - name: Check if Wifi is enabled
