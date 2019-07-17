@@ -11,7 +11,7 @@
   shell: grep "^dtparam=poe_fan_temp0" /boot/config.txt
   register: fan_speed
 
-- name: Set Pi-Hat fan speed to turn on when CPU temp is 80C, turn off at 75C
+- name: Set Pi-Hat fan speed to turn on when CPU temp is 65C, turn off at 60C
   blockinfile:
     path: /boot/config.txt
     block: |
