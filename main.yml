@@ -10,6 +10,13 @@
     - name: Allow Release Info Change
       command: apt-get update --allow-releaseinfo-change
 
+    - name: Upgrade system
+      apt:
+        upgrade: dist
+        # Need the force_apt_get until
+        # https://github.com/ansible/ansible/issues/56832
+        force_apt_get: yes
+
     - name: Upgrade all packages to the latest version
       apt:
         name: "*"
