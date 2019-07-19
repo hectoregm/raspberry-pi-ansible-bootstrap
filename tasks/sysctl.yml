@@ -1,0 +1,15 @@
+--- 
+
+- name: Set kernel parameters
+  sysctl: 
+    name: "{{ item.parameter_name }}"
+    value: "{{ item.parameter_value }}" 
+    sysctl_set: yes
+    reload: yes
+    state: present
+  with_items:
+    - { parameter_name: 'kernel.sem', parameter_value: '250 32000 32 262' }
+    - { parameter_name: 'kernel.shmall', parameter_value: '1048575' }
+    - { parameter_name: 'kernel.shmmax', parameter_value: '4294967295' }
+    - { parameter_name: 'net.core.somaxconn', parameter_value: '1024' }
+  tags: ['kernel']
