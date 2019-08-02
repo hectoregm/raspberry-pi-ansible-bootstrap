@@ -8,6 +8,9 @@
     # Need the force_apt_get until
     # https://github.com/ansible/ansible/issues/56832
     force_apt_get: yes
+  register: apt_install_neofetch
+  retries: 5
+  until: apt_install_neofetch is success
 
 - name: Enable neofetch on login
   copy:
