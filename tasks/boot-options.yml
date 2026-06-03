@@ -6,14 +6,6 @@
     regexp: '^(.*rootwait)$'
     line: '\1 ipv6.disable=1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
     state: present
-
-# - name: Set Pi-Hat fan speed to turn on when CPU temp is 65C, turn off at 60C
-#   blockinfile:
-#     path: /boot/config.txt
-#     marker: "# {mark} ANSIBLE POE FAN SPEED"
-#     block: |
-#       dtparam=poe_fan_temp0=60000,poe_fan_temp0_hyst=5000
-#       dtparam=poe_fan_temp1=65000,poe_fan_temp1_hyst=2000
   
 - name: Disable WiFi
   blockinfile:
@@ -39,6 +31,13 @@
 - name: Disable Audio
   lineinfile:
     path: /boot/config.txt
-    regexp: '^dtparam=audio=on$'
+    regexp: '^dtparam=audio=(on|off)$'
     line: 'dtparam=audio=off'
     state: present
+    
+- name: Set GPU memory to 16M
+  blockinfile:
+    path: /boot/config.txt
+    marker: "# {mark} ANSIBLE GPU MEM"
+    block: |
+      gpu_mem=16

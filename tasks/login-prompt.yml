@@ -14,7 +14,7 @@
 
 - name: Enable neofetch on login
   copy:
-    content: "neofetch"
+    content: "neofetch\nsource <(sudo kubectl completion bash)\nalias k='sudo kubectl'\ncomplete -F __start_kubectl k"
     dest: "/home/{{ ansible_ssh_user }}/.bash_profile"
     group: "{{ ansible_ssh_user }}"
     owner: "{{ ansible_ssh_user }}"

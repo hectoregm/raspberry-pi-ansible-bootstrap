@@ -45,6 +45,7 @@
           - ca-certificates
           - software-properties-common
           - jq
+          - vim
         update_cache: yes
         # Need the force_apt_get until
         # https://github.com/ansible/ansible/issues/56832
